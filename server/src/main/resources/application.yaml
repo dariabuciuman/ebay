@@ -14,3 +14,6 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+jwt:
+  jwtSecret: "wrfo_wijfqw-e][2ro[2"
+  jwtExpirationMs: 86400000

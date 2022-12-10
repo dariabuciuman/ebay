@@ -17,8 +17,4 @@ public class Role {
 
     private String name;
 
-    public Role(String roleName) {
-        this.name = roleName;
-    }
-
 }

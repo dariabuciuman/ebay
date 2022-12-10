@@ -54,4 +54,6 @@ public class ShopUserDetails implements UserDetails {
     public boolean isEnabled() {
         return user.isActive();
     }
+
+    public String getEmail() { return user.getEmail(); }
 }

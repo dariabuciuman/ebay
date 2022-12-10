@@ -1,23 +1,29 @@
 package com.ebay.server.controller;
 
+import com.ebay.server.dto.JwtResponseDTO;
 import com.ebay.server.dto.RegisterUserDTO;
+import com.ebay.server.dto.SignInUserDTO;
 import com.ebay.server.exception.UserException;
-import com.ebay.server.service.ShopUserDetailsService;
-import lombok.extern.slf4j.Slf4j;
+import com.ebay.server.service.AuthHelperService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+
 @RestController
+@RequestMapping("/api/auth")
 public class AuthenticationController {
 
     @Autowired
-    private ShopUserDetailsService userDetailsService;
+    private AuthHelperService authHelperService;
 
     @PostMapping(value = "/register", consumes = "application/json")
     public void registerUser(@RequestBody RegisterUserDTO registerUser) throws UserException {
-        userDetailsService.registerUser(registerUser);
+        authHelperService.registerUser(registerUser);
     }
+
+    @PostMapping(value = "/signin", consumes = "application/json")
+    public JwtResponseDTO signInUser(@RequestBody SignInUserDTO signInUser) {
+        return authHelperService.signInUser(signInUser);
+    }
+
 }
