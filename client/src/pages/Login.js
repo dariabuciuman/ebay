@@ -25,19 +25,24 @@ export default function Login() {
     const data = new FormData(event.currentTarget);
     const username = data.get("username");
     const password = data.get("password");
-    axios.post(
-      "/signin",
-      {
-        username,
-        password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+    axios
+      .post(
+        "api/auth/signin",
+        {
+          username,
+          password,
         },
-      }
-    );
-    navigate("/home");
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data.token);
+        localStorage.setItem("auth-token", res.data.token);
+        navigate("/home");
+      });
   };
 
   return (

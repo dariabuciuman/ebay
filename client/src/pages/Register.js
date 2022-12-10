@@ -29,7 +29,7 @@ export default function Register() {
     const password = data.get("password");
     axios
       .post(
-        "/register",
+        "/api/auth/register",
         { email: email, username: username, firstName: firstName, lastName: lastName, password: password },
         {
           headers: {
