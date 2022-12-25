@@ -5,19 +5,21 @@ import Home from "./pages/Home";
 import Login from "./pages/authentication/Login";
 import Register from "./pages/authentication/Register";
 import AddProduct from "./pages/products/AddProduct";
+import ViewProducts from "./pages/products/ViewProducts";
 
 function App() {
   const [user, setUser] = React.useState(false);
 
   return (
     <>
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/products/add" element={<AddProduct />} />
+          <Route path="/products" element={<ViewProducts />} />
         </Routes>
       </BrowserRouter>
     </>

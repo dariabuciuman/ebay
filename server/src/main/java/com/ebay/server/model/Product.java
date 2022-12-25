@@ -33,10 +33,6 @@ public class Product {
 
     private boolean isActive;
 
-    /*@ManyToOne
-    @JoinColumn(name = "seller_id", referencedColumnName="user_id", insertable = false, updatable = false)
-    private User seller2;*/
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "seller_id", nullable = false)
     private User seller;

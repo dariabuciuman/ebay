@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-function Home() {
+function ViewProducts() {
   const [products, setProducts] = React.useState([]);
 
   async function getProducts() {
@@ -16,16 +16,12 @@ function Home() {
       });
   }
 
-  const handleGetProducts = () => {
-    getProducts();
-  };
-
   return (
     <div>
-      Welcome to E-buy! Just like E-bay but cheaper!
+      ViewProducts
       <button onClick={getProducts}>Get products</button>
     </div>
   );
 }
 
-export default Home;
+export default ViewProducts;

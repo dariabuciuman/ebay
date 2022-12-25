@@ -1,6 +1,5 @@
 package com.ebay.server.model;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,8 +57,6 @@ public class ShopUserDetails implements UserDetails {
     }
 
     public String getEmail() { return user.getEmail(); }
-
-    public Long getId() {return user.getId();}
 
     public User getUser() {
         return user;

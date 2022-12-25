@@ -31,11 +31,15 @@ public class ProductService {
         List<ProductDTO> productDTOS = new ArrayList<>();
         productList.forEach((product -> {
             ProductDTO productDTO = new ProductDTO();
-            productDTO.setCondition(product.getCondition());
             productDTO.setName(product.getName());
-            productDTO.setDescription(product.getDescription());
             productDTO.setManufacturer(product.getManufacturer());
-            productDTO.setStartingPrice(product.getHighestPrice());
+            productDTO.setDescription(product.getDescription());
+            productDTO.setCondition(product.getCondition());
+            productDTO.setStartingPrice(product.getStartingPrice());
+            productDTO.setHighestPrice(product.getHighestPrice());
+            productDTO.setPublishDate(product.getPublishDate());
+            productDTO.setExpiryDate(product.getExpiryDate());
+            productDTO.setActive(product.isActive());
             productDTOS.add(productDTO);
         }));
         return productDTOS;

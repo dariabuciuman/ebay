@@ -14,20 +14,25 @@ import AdbIcon from "@mui/icons-material/Adb";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { ThemeProvider } from "@mui/material";
 import theme from "../utils/NavbarTheme";
+import { useNavigate } from "react-router-dom";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-const settings2 = [
+const pages = [
+  { name: "Products", link: "/products" },
+  { name: "Pricing", link: "/" },
+  { name: "Blog", link: "/" },
+];
+const settings = [
   { name: "Sign In", link: "/signin" },
   { name: "Sign Up", link: "/signup" },
-  { name: "Logout", link: "/" },
 ];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
+    console.log(event.currentTarget);
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
@@ -44,6 +49,7 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.clear();
+    navigate("/");
   };
 
   return (
@@ -100,8 +106,14 @@ function Navbar() {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <MenuItem
+                    key={page.name}
+                    onClick={() => {
+                      setAnchorElNav(null);
+                      navigate(page.link);
+                    }}
+                  >
+                    <Typography textAlign="center">{page.name}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -127,8 +139,15 @@ function Navbar() {
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
-                <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
-                  {page}
+                <Button
+                  key={page.name}
+                  onClick={() => {
+                    setAnchorElNav(null);
+                    navigate(page.link);
+                  }}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.name}
                 </Button>
               ))}
             </Box>
@@ -155,14 +174,21 @@ function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings2.map((setting) => (
-                  <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center" component="a" href={setting.link}>
-                      {setting.name}
-                    </Typography>
+                {settings.map((setting) => (
+                  <MenuItem
+                    key={setting.name}
+                    onClick={() => {
+                      setAnchorElUser(null);
+                      navigate(setting.link);
+                    }}
+                  >
+                    <Typography textAlign="center">{setting.name}</Typography>
                   </MenuItem>
                 ))}
-                <MenuItem key="Logout" onClick={handleLogout}></MenuItem>
+                <MenuItem key="Logout" onClick={handleLogout}>
+                  {" "}
+                  Logout{" "}
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>
