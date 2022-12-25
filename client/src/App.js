@@ -14,8 +14,8 @@ function App() {
       <Navbar />
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/signin" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
           <Route path="/home" element={<Home />} />
           <Route path="/products/add" element={<AddProduct />} />
         </Routes>

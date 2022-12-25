@@ -2,6 +2,8 @@ package com.ebay.server.dto;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class ProductDTO {
     private String name;
@@ -12,5 +14,13 @@ public class ProductDTO {
 
     private String condition;
 
-    private Float price;
+    private Float startingPrice;
+
+    private Float highestPrice;
+
+    private Date publishDate;
+
+    private Date expiryDate;
+
+    private boolean isActive;
 }

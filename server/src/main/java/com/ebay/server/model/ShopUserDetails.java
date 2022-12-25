@@ -1,5 +1,6 @@
 package com.ebay.server.model;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+
 
 public class ShopUserDetails implements UserDetails {
     private User user;
@@ -56,4 +58,10 @@ public class ShopUserDetails implements UserDetails {
     }
 
     public String getEmail() { return user.getEmail(); }
+
+    public Long getId() {return user.getId();}
+
+    public User getUser() {
+        return user;
+    }
 }

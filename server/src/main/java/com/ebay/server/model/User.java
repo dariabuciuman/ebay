@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -39,4 +40,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Product> products;
 }

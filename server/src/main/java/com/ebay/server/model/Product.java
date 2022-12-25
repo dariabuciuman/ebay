@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -22,7 +23,21 @@ public class Product {
 
     private String condition;
 
-    private Float price;
+    private Float startingPrice;
 
-    private Long seller_id;
+    private Float highestPrice;
+
+    private Date publishDate;
+
+    private Date expiryDate;
+
+    private boolean isActive;
+
+    /*@ManyToOne
+    @JoinColumn(name = "seller_id", referencedColumnName="user_id", insertable = false, updatable = false)
+    private User seller2;*/
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "seller_id", nullable = false)
+    private User seller;
 }

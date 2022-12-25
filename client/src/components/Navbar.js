@@ -18,8 +18,9 @@ import theme from "../utils/NavbarTheme";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const settings2 = [
-  { name: "Sign In", link: "/login" },
-  { name: "Sign Up", link: "/register" },
+  { name: "Sign In", link: "/signin" },
+  { name: "Sign Up", link: "/signup" },
+  { name: "Logout", link: "/" },
 ];
 
 function Navbar() {
@@ -39,6 +40,10 @@ function Navbar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
   };
 
   return (
@@ -157,6 +162,7 @@ function Navbar() {
                     </Typography>
                   </MenuItem>
                 ))}
+                <MenuItem key="Logout" onClick={handleLogout}></MenuItem>
               </Menu>
             </Box>
           </Toolbar>
