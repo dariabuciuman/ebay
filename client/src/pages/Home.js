@@ -22,8 +22,7 @@ function Home() {
 
   return (
     <div>
-      Welcome to E-buy! Just like E-bay but cheaper!
-      <button onClick={getProducts}>Get products</button>
+      <h1>Welcome to E-buy! Just like E-bay but cheaper!</h1>
     </div>
   );
 }

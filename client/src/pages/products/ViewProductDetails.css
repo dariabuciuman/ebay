@@ -1,0 +1,99 @@
+.product-page {
+  margin-top: 0px;
+  width: 100%;
+  background-color: #f8f8f8;
+  min-height: 91vh;
+  color: #0f0f0f;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
+}
+.product-dash {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+.product-img-area {
+  /* width: 40vw; */
+  margin-right: 2rem;
+  width: 30vw;
+}
+.product-img {
+  padding-top: 50px;
+  height: 40vmax;
+  object-fit: contain;
+  width: 30vw;
+  justify-content: end;
+}
+
+.product-text {
+  margin-top: -150px;
+  height: 20vmax;
+  margin-left: 2rem;
+  width: 30vw;
+  font-weight: 400;
+}
+
+.product-text > h1 {
+  text-transform: uppercase;
+  font-size: xx-large;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.product-text > h2 {
+  text-transform: capitalize;
+  font-size: x-large;
+  margin-bottom: 1rem;
+}
+
+.product-text > p {
+  font-size: small;
+  margin-bottom: 1rem;
+}
+.product-prices {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.product-price {
+  font-size: xx-large;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+.product-price > p {
+  font-size: medium;
+  margin-right: 2rem;
+  vertical-align: text-top;
+}
+.product-price > h2 {
+  font-size: xx-large;
+  font-weight: 600;
+  margin-right: 1rem;
+  vertical-align: middle;
+}
+
+.highest-price {
+  color: rgb(172, 22, 22);
+}
+
+.bidding {
+  margin-top: 2rem;
+}
+
+.product-buttons {
+  margin-top: 2rem;
+  width: 100px;
+  background-color: #0f0f0f;
+}
+.bid-button {
+  height: 5vh;
+  width: 100px;
+  background-color: #0f0f0f;
+  color: #f8f8f8;
+  border-style: none;
+}

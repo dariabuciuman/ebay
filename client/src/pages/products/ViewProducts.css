@@ -1,0 +1,19 @@
+.shop {
+  background-color: #e8e8e8;
+  color: #f8f8f8;
+  min-height: 86vh;
+  padding-top: 7vh;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+}
+.products {
+  padding: 1rem;
+  margin: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  row-gap: 2rem;
+}

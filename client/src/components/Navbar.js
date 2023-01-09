@@ -18,8 +18,8 @@ import { useNavigate } from "react-router-dom";
 
 const pages = [
   { name: "Products", link: "/products" },
-  { name: "Pricing", link: "/" },
-  { name: "Blog", link: "/" },
+  { name: "Add product", link: "/products/add" },
+  { name: "About us", link: "/" },
 ];
 const settings = [
   { name: "Sign In", link: "/signin" },

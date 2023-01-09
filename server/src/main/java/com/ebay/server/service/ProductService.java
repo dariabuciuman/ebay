@@ -1,15 +1,12 @@
 package com.ebay.server.service;
 
 import com.ebay.server.dto.ProductDTO;
+import com.ebay.server.exception.ProductException;
 import com.ebay.server.model.Product;
-import com.ebay.server.model.ShopUserDetails;
 import com.ebay.server.model.User;
 import com.ebay.server.repo.ProductRepository;
 import com.ebay.server.util.CurrentUserUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,21 +23,15 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public Product getProductByID(Long productId) {
+        return productRepository.findProductByProductId(productId);
+    }
+
     public List<ProductDTO> getAllProducts() {
         List<Product> productList = productRepository.findAll();
         List<ProductDTO> productDTOS = new ArrayList<>();
         productList.forEach((product -> {
-            ProductDTO productDTO = new ProductDTO();
-            productDTO.setName(product.getName());
-            productDTO.setManufacturer(product.getManufacturer());
-            productDTO.setDescription(product.getDescription());
-            productDTO.setCondition(product.getCondition());
-            productDTO.setStartingPrice(product.getStartingPrice());
-            productDTO.setHighestPrice(product.getHighestPrice());
-            productDTO.setPublishDate(product.getPublishDate());
-            productDTO.setExpiryDate(product.getExpiryDate());
-            productDTO.setActive(product.isActive());
-            productDTOS.add(productDTO);
+            productDTOS.add(productDAOToDTO(product));
         }));
         return productDTOS;
     }
@@ -60,11 +51,39 @@ public class ProductService {
         product.setExpiryDate(productDTO.getExpiryDate());
         product.setActive(true);
         product.setSeller(user);
+        product.setBidder(null);
         productRepository.save(product);
         log.info("Product {} was added successfully", productDTO.getName());
     }
 
-    public void checkExpiryForProduct(ProductDTO productDTO){
+    public void addHighestPrice(ProductDTO productDTO) throws ProductException {
+        User bidder = CurrentUserUtil.getCurrentUser();
+        Product product = productRepository.findProductByProductId(productDTO.getProductId());
+        if (!bidder.getId().equals(product.getSeller().getId())) {
+            if (productDTO.getHighestPrice() > product.getStartingPrice() && product.getHighestPrice() != null && productDTO.getHighestPrice() > product.getHighestPrice()) {
+                product.setHighestPrice(productDTO.getHighestPrice());
+                product.setBidder(bidder);
+                productRepository.save(product);
+            }
+        } else throw new ProductException(ProductException.INCORRECT_BID);
+    }
+
+    public void checkExpiryForProduct(ProductDTO productDTO) {
         // if expiry date < now, set isActive to false
+    }
+
+    private ProductDTO productDAOToDTO(Product product) {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProductId(product.getProductId());
+        productDTO.setName(product.getName());
+        productDTO.setManufacturer(product.getManufacturer());
+        productDTO.setDescription(product.getDescription());
+        productDTO.setCondition(product.getCondition());
+        productDTO.setStartingPrice(product.getStartingPrice());
+        productDTO.setHighestPrice(product.getHighestPrice());
+        productDTO.setPublishDate(product.getPublishDate());
+        productDTO.setExpiryDate(product.getExpiryDate());
+        productDTO.setActive(product.isActive());
+        return productDTO;
     }
 }

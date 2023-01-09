@@ -41,7 +41,7 @@ export default function Login() {
       .then((res) => {
         console.log(res.data.token);
         localStorage.setItem("auth-token", res.data.token);
-        navigate("/home");
+        navigate("/");
       });
   };
 

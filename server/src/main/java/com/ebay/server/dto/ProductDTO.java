@@ -6,6 +6,8 @@ import java.util.Date;
 
 @Data
 public class ProductDTO {
+    private Long productId;
+
     private String name;
 
     private String manufacturer;

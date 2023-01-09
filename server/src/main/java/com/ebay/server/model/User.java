@@ -44,4 +44,8 @@ public class User {
     @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @OneToMany(mappedBy = "bidder", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Product> bidProducts;
 }

@@ -67,7 +67,7 @@ export default function AddProduct() {
   async function postProduct(product) {
     const jwt = "Bearer " + localStorage.getItem("auth-token");
     await axios
-      .post("/api/public/products/add", product, {
+      .post("/api/private/products/add", product, {
         headers: {
           "Content-Type": "application/json",
           Authorization: jwt,
@@ -95,6 +95,7 @@ export default function AddProduct() {
       description: description,
       condition: condition,
       startingPrice: startingPrice,
+      highestPrice: 0,
       publishDate: publishDate,
       expiryDate: expiryDate,
       isActive: true,

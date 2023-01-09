@@ -2,6 +2,7 @@ package com.ebay.server.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.Date;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long product_id;
+    private Long productId;
 
     private String name;
 
@@ -36,4 +37,8 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "seller_id", nullable = false)
     private User seller;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bidder_id")
+    private User bidder;
 }
