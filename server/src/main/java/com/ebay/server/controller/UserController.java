@@ -2,7 +2,6 @@ package com.ebay.server.controller;
 
 import com.ebay.server.dto.ProductDTO;
 import com.ebay.server.dto.UserDetailsDTO;
-import com.ebay.server.service.ProductService;
 import com.ebay.server.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

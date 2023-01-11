@@ -1,6 +1,5 @@
 package com.ebay.server.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
