@@ -2,7 +2,6 @@ package com.ebay.server.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.Date;
