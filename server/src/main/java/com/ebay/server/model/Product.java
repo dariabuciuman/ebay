@@ -35,10 +35,10 @@ public class Product {
     private boolean isActive;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "seller_id", nullable = false)
+    @JoinColumn(name = "sellerId", nullable = false)
     private User seller;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bidder_id")
+    @JoinColumn(name = "bidderId")
     private User bidder;
 }

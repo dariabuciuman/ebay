@@ -42,6 +42,7 @@ export default function Login() {
         console.log(res.data.token);
         localStorage.setItem("auth-token", res.data.token);
         navigate("/");
+        window.location.reload(false);
       });
   };
 

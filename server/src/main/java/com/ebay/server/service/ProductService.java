@@ -6,6 +6,7 @@ import com.ebay.server.model.Product;
 import com.ebay.server.model.User;
 import com.ebay.server.repo.ProductRepository;
 import com.ebay.server.util.CurrentUserUtil;
+import com.ebay.server.util.ProductUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class ProductService {
         List<Product> productList = productRepository.findAll();
         List<ProductDTO> productDTOS = new ArrayList<>();
         productList.forEach((product -> {
-            productDTOS.add(productDAOToDTO(product));
+            productDTOS.add(ProductUtil.productDAOToDTO(product));
         }));
         return productDTOS;
     }
@@ -58,6 +59,11 @@ public class ProductService {
 
     public void addHighestPrice(ProductDTO productDTO) throws ProductException {
         User bidder = CurrentUserUtil.getCurrentUser();
+        /*TODO
+        *  make method to add product to bidProducts
+        *  also make method to add a product to a products list
+        *  maybe make another user_products table and user_bids table
+        * */
         Product product = productRepository.findProductByProductId(productDTO.getProductId());
         if (!bidder.getId().equals(product.getSeller().getId())) {
             if (productDTO.getHighestPrice() > product.getStartingPrice() && product.getHighestPrice() != null && productDTO.getHighestPrice() > product.getHighestPrice()) {
@@ -70,20 +76,5 @@ public class ProductService {
 
     public void checkExpiryForProduct(ProductDTO productDTO) {
         // if expiry date < now, set isActive to false
-    }
-
-    private ProductDTO productDAOToDTO(Product product) {
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setProductId(product.getProductId());
-        productDTO.setName(product.getName());
-        productDTO.setManufacturer(product.getManufacturer());
-        productDTO.setDescription(product.getDescription());
-        productDTO.setCondition(product.getCondition());
-        productDTO.setStartingPrice(product.getStartingPrice());
-        productDTO.setHighestPrice(product.getHighestPrice());
-        productDTO.setPublishDate(product.getPublishDate());
-        productDTO.setExpiryDate(product.getExpiryDate());
-        productDTO.setActive(product.isActive());
-        return productDTO;
     }
 }

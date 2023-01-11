@@ -35,7 +35,4 @@ public class ShopUserDetailsService implements UserDetailsService {
         return new ShopUserDetails(user);
     }
 
-    public void signInUser(SignInUserDTO signInUser) {
-
-    }
 }

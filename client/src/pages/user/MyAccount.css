@@ -1,0 +1,28 @@
+.user-page {
+  background-color: #e8e8e8;
+  color: #f8f8f8;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+}
+.user-info {
+  color: black;
+  padding-left: 1rem;
+}
+.list-text {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: black;
+  padding-left: 1rem;
+}
+.products {
+  padding: 1rem;
+  margin: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  row-gap: 2rem;
+}

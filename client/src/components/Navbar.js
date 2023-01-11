@@ -15,6 +15,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { ThemeProvider } from "@mui/material";
 import theme from "../utils/NavbarTheme";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 const pages = [
   { name: "Products", link: "/products" },
@@ -25,10 +27,14 @@ const settings = [
   { name: "Sign In", link: "/signin" },
   { name: "Sign Up", link: "/signup" },
 ];
+const settingsLoggedIn = [{ name: "My account", link: "/account" }];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [user, setUser] = React.useState(null);
+  const [options, setOptions] = React.useState(settings);
+
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -50,7 +56,29 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
+    window.location.reload(false);
   };
+
+  useEffect(() => {
+    const jwt = "Bearer " + localStorage.getItem("auth-token");
+    if (localStorage.getItem("auth-token")) {
+      //GET USER INFO
+      axios({
+        method: "get",
+        url: `/api/private/user/info`,
+        headers: {
+          Authorization: jwt,
+        },
+      })
+        .then((response) => {
+          setUser(response.data);
+          setOptions(settingsLoggedIn);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -174,7 +202,7 @@ function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
+                {options.map((setting) => (
                   <MenuItem
                     key={setting.name}
                     onClick={() => {
@@ -185,12 +213,15 @@ function Navbar() {
                     <Typography textAlign="center">{setting.name}</Typography>
                   </MenuItem>
                 ))}
-                <MenuItem key="Logout" onClick={handleLogout}>
-                  {" "}
-                  Logout{" "}
-                </MenuItem>
+                {user && (
+                  <MenuItem key="Logout" onClick={handleLogout}>
+                    {" "}
+                    Logout{" "}
+                  </MenuItem>
+                )}
               </Menu>
             </Box>
+            {user && <Typography sx={{ marginLeft: "5px" }}>{user.firstName}</Typography>}
           </Toolbar>
         </Container>
       </AppBar>

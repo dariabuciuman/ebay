@@ -7,10 +7,9 @@ import Register from "./pages/authentication/Register";
 import AddProduct from "./pages/products/AddProduct";
 import ViewProducts from "./pages/products/ViewProducts";
 import ViewProduct from "./pages/products/ViewProductDetails";
+import MyAccount from "./pages/user/MyAccount";
 
 function App() {
-  const [user, setUser] = React.useState(false);
-
   return (
     <>
       <BrowserRouter>
@@ -22,6 +21,7 @@ function App() {
           <Route path="/products/add" element={<AddProduct />} />
           <Route path="/products" element={<ViewProducts />} />
           <Route path="/products/:id" element={<ViewProduct />} />
+          <Route path="/account" element={<MyAccount />} />
         </Routes>
       </BrowserRouter>
     </>
