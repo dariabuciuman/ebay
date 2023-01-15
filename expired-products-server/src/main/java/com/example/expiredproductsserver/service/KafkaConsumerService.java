@@ -1,4 +1,4 @@
-package com.example.expiredproductsserver.kafka;
+package com.example.expiredproductsserver.service;
 
 import com.example.expiredproductsserver.dto.ProductDTO;
 import lombok.extern.slf4j.Slf4j;
