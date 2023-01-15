@@ -1,4 +1,4 @@
-package com.ebay.server.dto;
+package com.example.expiredproductsserver.dto;
 
 import lombok.Data;
 

@@ -24,8 +24,9 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product getProductByID(Long productId) {
-        return productRepository.findProductByProductId(productId);
+    public ProductDTO getProductDTOByID(Long productId) {
+        Product product = productRepository.findProductByProductId(productId);
+        return ProductUtil.productDAOToDTO(product);
     }
 
     public List<ProductDTO> getAllProducts() {

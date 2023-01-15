@@ -16,8 +16,8 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping(value = "/private/products/getProduct/{productId}")
-    public Product getProductByID(@PathVariable("productId") Long productId) {
-        return productService.getProductByID(productId);
+    public ProductDTO getProductByID(@PathVariable("productId") Long productId) {
+        return productService.getProductDTOByID(productId);
     }
 
     @GetMapping(value = "/public/products")
