@@ -20,7 +20,6 @@ function ViewProduct(props) {
 
   const WEBSOCKET_URL = "ws://localhost:8080/ws-message";
 
-  console.log(state.product);
   const jwt = "Bearer " + localStorage.getItem("auth-token");
 
   useEffect(() => {
@@ -39,7 +38,6 @@ function ViewProduct(props) {
       .catch((error) => {
         console.log(error);
       });
-    console.log(product);
     client.current = new Client({
       brokerURL: WEBSOCKET_URL,
       reconnectDelay: 5000,
@@ -55,9 +53,9 @@ function ViewProduct(props) {
     console.log("Connected to websocket...");
     client.current.subscribe(`/product_update/${state.product.productId}`, (message) => {
       if (message.body) {
-        console.log("Price:" + JSON.parse(message.body).highestPrice);
-        setCurrentHighestPrice(JSON.parse(message.body).highestPrice);
-        product.highestPrice = +JSON.parse(message.body).highestPrice;
+        const newPrice = JSON.parse(message.body).highestPrice;
+        console.log("Price:" + newPrice);
+        setCurrentHighestPrice(newPrice);
       }
     });
   };
@@ -70,7 +68,7 @@ function ViewProduct(props) {
     setBid(event.target.value);
   }
 
-  function bidForProduct(productId) {
+  function bidForProduct() {
     if (bid <= product.startingPrice) {
       setFormState("error");
       setAlert(true);
@@ -157,7 +155,7 @@ function ViewProduct(props) {
                 type="submit"
                 onClick={() => {
                   console.log("clicked " + product.name);
-                  bidForProduct(product.productId);
+                  bidForProduct();
                 }}
               >
                 Place bid

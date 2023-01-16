@@ -1,4 +1,4 @@
-package com.ebay.server.kafka;
+package com.ebay.server.config;
 
 import com.ebay.server.dto.ExpiredProductDTO;
 import com.ebay.server.dto.ProductDTO;
