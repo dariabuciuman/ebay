@@ -2,7 +2,6 @@ package com.ebay.server.controller;
 
 import com.ebay.server.dto.ProductDTO;
 import com.ebay.server.exception.ProductException;
-import com.ebay.server.model.Product;
 import com.ebay.server.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,5 +1,6 @@
 package com.ebay.server.util;
 
+import com.ebay.server.dto.ExpiredProductDTO;
 import com.ebay.server.dto.ProductDTO;
 import com.ebay.server.model.Product;
 
@@ -18,5 +19,26 @@ public class ProductUtil {
         productDTO.setExpiryDate(product.getExpiryDate());
         productDTO.setActive(product.isActive());
         return productDTO;
+    }
+
+    public static ExpiredProductDTO expiredProductDAOToDTO(Product product) {
+        ExpiredProductDTO expiredProductDTO = new ExpiredProductDTO();
+        expiredProductDTO.setProductId(product.getProductId());
+        expiredProductDTO.setName(product.getName());
+        expiredProductDTO.setManufacturer(product.getManufacturer());
+        expiredProductDTO.setDescription(product.getDescription());
+        expiredProductDTO.setCondition(product.getCondition());
+        expiredProductDTO.setStartingPrice(product.getStartingPrice());
+        //if(product.getHighestPrice() != null)
+            expiredProductDTO.setHighestPrice(product.getHighestPrice());
+        //else expiredProductDTO.setHighestPrice((float) 0);
+        expiredProductDTO.setPublishDate(product.getPublishDate());
+        expiredProductDTO.setExpiryDate(product.getExpiryDate());
+        expiredProductDTO.setActive(product.isActive());
+        expiredProductDTO.setSellerId(product.getSeller().getId());
+        if(product.getBidder() != null)
+            expiredProductDTO.setBidderId(product.getBidder().getId());
+        else expiredProductDTO.setBidderId(null);
+        return expiredProductDTO;
     }
 }

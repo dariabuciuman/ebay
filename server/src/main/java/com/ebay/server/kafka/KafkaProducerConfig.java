@@ -1,5 +1,6 @@
 package com.ebay.server.kafka;
 
+import com.ebay.server.dto.ExpiredProductDTO;
 import com.ebay.server.dto.ProductDTO;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -21,7 +22,7 @@ public class KafkaProducerConfig {
     private String bootstrapServers;
 
     @Bean
-    public ProducerFactory<String, ProductDTO> producerFactory() {
+    public ProducerFactory<String, ExpiredProductDTO> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -30,7 +31,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, ProductDTO> kafkaTemplate() {
+    public KafkaTemplate<String, ExpiredProductDTO> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

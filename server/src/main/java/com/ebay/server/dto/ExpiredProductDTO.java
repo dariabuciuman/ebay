@@ -1,10 +1,11 @@
 package com.ebay.server.dto;
 
 import lombok.Data;
+
 import java.util.Date;
 
 @Data
-public class ProductDTO {
+public class ExpiredProductDTO {
     private Long productId;
 
     private String name;
@@ -24,4 +25,8 @@ public class ProductDTO {
     private Date expiryDate;
 
     private boolean isActive;
+
+    private Long sellerId;
+
+    private Long bidderId;
 }

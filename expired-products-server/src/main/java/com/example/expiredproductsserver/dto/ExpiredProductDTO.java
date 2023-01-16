@@ -1,12 +1,10 @@
 package com.example.expiredproductsserver.dto;
 
 import lombok.Data;
-
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class ProductDTO {
+public class ExpiredProductDTO {
     private Long productId;
 
     private String name;
@@ -26,4 +24,8 @@ public class ProductDTO {
     private Date expiryDate;
 
     private boolean isActive;
+
+    private Long sellerId;
+
+    private Long bidderId;
 }

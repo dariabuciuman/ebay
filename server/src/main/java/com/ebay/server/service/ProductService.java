@@ -1,5 +1,6 @@
 package com.ebay.server.service;
 
+import com.ebay.server.dto.ExpiredProductDTO;
 import com.ebay.server.dto.ProductDTO;
 import com.ebay.server.exception.ProductException;
 import com.ebay.server.model.Product;
@@ -8,9 +9,11 @@ import com.ebay.server.repo.ProductRepository;
 import com.ebay.server.util.CurrentUserUtil;
 import com.ebay.server.util.ProductUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,10 +21,11 @@ import java.util.List;
 public class ProductService {
 
     private ProductRepository productRepository;
+    private final KafkaTemplate<String, ExpiredProductDTO> kafkaTemplate;
 
-
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, KafkaTemplate<String, ExpiredProductDTO> kafkaTemplate) {
         this.productRepository = productRepository;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     public ProductDTO getProductDTOByID(Long productId) {
@@ -34,6 +38,7 @@ public class ProductService {
         List<ProductDTO> productDTOS = new ArrayList<>();
         productList.forEach((product -> {
             productDTOS.add(ProductUtil.productDAOToDTO(product));
+            checkExpiryForProduct(product);
         }));
         return productDTOS;
     }
@@ -60,11 +65,6 @@ public class ProductService {
 
     public void addHighestPrice(ProductDTO productDTO) throws ProductException {
         User bidder = CurrentUserUtil.getCurrentUser();
-        /*TODO
-        *  make method to add product to bidProducts
-        *  also make method to add a product to a products list
-        *  maybe make another user_products table and user_bids table
-        * */
         Product product = productRepository.findProductByProductId(productDTO.getProductId());
         if (!bidder.getId().equals(product.getSeller().getId())) {
             if (productDTO.getHighestPrice() > product.getStartingPrice() && product.getHighestPrice() != null && productDTO.getHighestPrice() > product.getHighestPrice()) {
@@ -75,7 +75,14 @@ public class ProductService {
         } else throw new ProductException(ProductException.INCORRECT_BID);
     }
 
-    public void checkExpiryForProduct(ProductDTO productDTO) {
+    public void checkExpiryForProduct(Product product) {
+        final KafkaProducerService producerService = new KafkaProducerService(kafkaTemplate);
         // if expiry date < now, set isActive to false
+        if(new Date().after(product.getExpiryDate())) {
+            product.setActive(false);
+            ExpiredProductDTO expiredProductDTO = ProductUtil.expiredProductDAOToDTO(product);
+            producerService.sendMessage("expiredProducts", expiredProductDTO);
+            productRepository.delete(product);
+        }
     }
 }

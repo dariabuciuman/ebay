@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@RestController
-@RequestMapping("/kafka")
+//@RestController
+//@RequestMapping("/kafka")
 public final class KafkaController {
-    private final String TOPIC = "expiredProducts";
+    /*private final String TOPIC = "expiredProducts";
     private final KafkaProducerService producerService;
 
     public KafkaController(KafkaProducerService producerService) {
@@ -19,5 +19,5 @@ public final class KafkaController {
     @RequestMapping(value = "/send_product", method = RequestMethod.POST)
     public void sendMessage(@RequestBody ProductDTO productDTO) {
         producerService.sendMessage(TOPIC, productDTO);
-    }
+    }*/
 }
