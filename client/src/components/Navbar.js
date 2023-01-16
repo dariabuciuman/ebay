@@ -27,7 +27,13 @@ const settings = [
   { name: "Sign In", link: "/signin" },
   { name: "Sign Up", link: "/signup" },
 ];
-const settingsLoggedIn = [{ name: "My account", link: "/account" }];
+const settingsLoggedIn = [
+  { name: "My account", link: "/account" },
+  { name: "My products", link: "/account/products" },
+  { name: "My bids", link: "/account/bids" },
+  { name: "My expired products", link: "/account/expired-products" },
+  { name: "My expired bids", link: "/account/expired-bids" },
+];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
