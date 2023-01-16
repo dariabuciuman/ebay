@@ -91,9 +91,18 @@ function ViewProducts() {
                     margin: "0.5rem",
                   }}
                 >
-                  <Typography sx={{ alignContent: "center" }} variant="h5" color="#000">
-                    {product.startingPrice + " $"}
-                  </Typography>
+                  <div style={{ display: "flex", flexDirection: "row" }}>
+                    <p style={{ fontSize: "14px" }}>Highest price:</p>
+                    {product.highestPrice !== 0 ? (
+                      <Typography sx={{ alignContent: "center", marginLeft: "20px", marginTop: "5px" }} variant="h5" color="#000">
+                        {product.highestPrice + " $"}
+                      </Typography>
+                    ) : (
+                      <Typography sx={{ alignContent: "center", marginLeft: "20px", marginTop: "5px" }} variant="h5" color="#000">
+                        {product.startingPrice + " $"}
+                      </Typography>
+                    )}
+                  </div>
                   <Button variant="contained" sx={{ backgroundColor: "black" }}>
                     BID
                   </Button>

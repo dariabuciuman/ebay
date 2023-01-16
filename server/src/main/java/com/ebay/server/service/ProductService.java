@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,5 +85,10 @@ public class ProductService {
             producerService.sendMessage("expiredProducts", expiredProductDTO);
             productRepository.delete(product);
         }
+    }
+
+    @Transactional
+    public void deleteProductById(Long productId) {
+        productRepository.removeProductByProductId(productId);
     }
 }

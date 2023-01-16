@@ -1,7 +1,7 @@
 .user-page {
   background-color: #e8e8e8;
   color: #f8f8f8;
-  min-height: 90vh;
+  min-height: 93vh;
   display: flex;
   flex-direction: column;
   justify-self: center;
@@ -9,6 +9,10 @@
 .user-info {
   color: black;
   padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
 }
 .list-text {
   margin-top: 0px;

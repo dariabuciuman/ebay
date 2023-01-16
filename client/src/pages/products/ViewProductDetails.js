@@ -18,26 +18,32 @@ function ViewProduct(props) {
   const [product, setProduct] = React.useState(null);
   const client = React.useRef(null);
 
+  console.log(state.product);
   const WEBSOCKET_URL = "ws://localhost:8080/ws-message";
 
   const jwt = "Bearer " + localStorage.getItem("auth-token");
 
   useEffect(() => {
-    axios({
-      method: "get",
-      url: `/api/private/products/getProduct/${state.product.productId}`,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-    })
-      .then((response) => {
-        setProduct(response.data);
-        setCurrentHighestPrice(response.data.highestPrice);
+    if (state.product.active === false) {
+      setCurrentHighestPrice(state.product.highestPrice);
+      setProduct(state.product);
+    } else {
+      axios({
+        method: "get",
+        url: `/api/private/products/getProduct/${state.product.productId}`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: jwt,
+        },
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          setProduct(response.data);
+          setCurrentHighestPrice(response.data.highestPrice);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
     client.current = new Client({
       brokerURL: WEBSOCKET_URL,
       reconnectDelay: 5000,
@@ -135,32 +141,41 @@ function ViewProduct(props) {
                 </div>
               )}
             </div>
-            <p>Product listing expires in {product.expiryDate.substring(0, 10)}</p>
-            <div className="bidding">
-              <h3>Bid for this product: </h3>
-              <TextField
-                id="standard-number"
-                type="number"
-                placeholder="Your bid"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="standard"
-                onChange={addBid}
-              />
-            </div>
-            <div className="product-buttons">
-              <button
-                className="bid-button"
-                type="submit"
-                onClick={() => {
-                  console.log("clicked " + product.name);
-                  bidForProduct();
-                }}
-              >
-                Place bid
-              </button>
-            </div>
+            {state.product.active ? (
+              <p>Product listing expires in {product.expiryDate.substring(0, 10)}</p>
+            ) : (
+              <p>Product expired in {product.expiryDate.substring(0, 10)}</p>
+            )}
+            {state.product.active && (
+              <div className="bidding">
+                <h3>Bid for this product: </h3>
+                <TextField
+                  id="standard-number"
+                  type="number"
+                  placeholder="Your bid"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="standard"
+                  onChange={addBid}
+                />
+              </div>
+            )}
+            {state.product.active && (
+              <div className="product-buttons">
+                <button
+                  className="bid-button"
+                  type="submit"
+                  onClick={() => {
+                    console.log("clicked " + product.name);
+                    bidForProduct();
+                  }}
+                >
+                  Place bid
+                </button>
+              </div>
+            )}
+
             {alert && (
               <Alert sx={{ mt: 3 }} severity={formState}>
                 {alertContent}

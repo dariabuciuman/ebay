@@ -1,13 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
-import { Link } from "react-router-dom";
 import "./MyAccount.css";
+import { TextField } from "@mui/material";
 
 function MyAccount() {
   const [user, setUser] = React.useState(null);
@@ -37,10 +32,47 @@ function MyAccount() {
     <div>
       {user && (
         <div className="user-page">
-          <h2 className="user-info">Welcome, {user.firstName}!</h2>
+          <div className="user-info">
+            <h2>Welcome, {user.firstName}!</h2>
+            <TextField
+              id="outlined-read-only-input"
+              label="First Name"
+              defaultValue={user.firstName}
+              InputProps={{
+                readOnly: true,
+              }}
+              sx={{ marginBottom: "20px" }}
+            />
+            <TextField
+              id="outlined-read-only-input"
+              label="Last Name"
+              defaultValue={user.lastName}
+              InputProps={{
+                readOnly: true,
+              }}
+              sx={{ marginBottom: "20px" }}
+            />
+            <TextField
+              id="outlined-read-only-input"
+              label="Username"
+              defaultValue={user.username}
+              InputProps={{
+                readOnly: true,
+              }}
+              sx={{ marginBottom: "20px" }}
+            />
+            <TextField
+              id="outlined-read-only-input"
+              label="Email"
+              defaultValue={user.email}
+              InputProps={{
+                readOnly: true,
+              }}
+              sx={{ marginBottom: "20px" }}
+            />
+          </div>
         </div>
       )}
-      <Typography></Typography>
       {!user && <div>Not logged in</div>}
     </div>
   );

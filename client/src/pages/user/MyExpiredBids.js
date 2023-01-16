@@ -49,7 +49,7 @@ function MyExpiredBids() {
     <div>
       {user && (
         <div className="user-page">
-          <h2 className="user-info">Your expired bids, {user.firstName}!</h2>
+          <h2 className="user-info">{user.firstName}'s expired bids:</h2>
           {bids.length === 0 && <p className="list-text">You don't have any expired bids. </p>}
           {bids.length !== 0 && (
             <div className="products">
@@ -113,9 +113,18 @@ function MyExpiredBids() {
                           margin: "0.5rem",
                         }}
                       >
-                        <Typography sx={{ alignContent: "center" }} variant="h5" color="#000">
-                          {bid.startingPrice + " $"}
-                        </Typography>
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                          <p style={{ fontSize: "14px" }}>Highest price:</p>
+                          {bid.highestPrice !== 0 ? (
+                            <Typography sx={{ alignContent: "center", marginLeft: "20px", marginTop: "5px" }} variant="h5" color="#000">
+                              {bid.highestPrice + " $"}
+                            </Typography>
+                          ) : (
+                            <Typography sx={{ alignContent: "center", marginLeft: "20px", marginTop: "5px" }} variant="h5" color="#000">
+                              {bid.startingPrice + " $"}
+                            </Typography>
+                          )}
+                        </div>
                         <Button variant="contained" sx={{ backgroundColor: "black" }}>
                           WATCH
                         </Button>

@@ -33,4 +33,9 @@ public class ProductController {
     public void placeBid(@RequestBody ProductDTO productDTO) throws ProductException {
         productService.addHighestPrice(productDTO);
     }
+
+    @DeleteMapping(value = "/private/products/delete")
+    public void deleteProduct(@RequestParam Long productId){
+        productService.deleteProductById(productId);
+    }
 }
