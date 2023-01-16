@@ -6,8 +6,6 @@ import { TextField } from "@mui/material";
 
 function MyAccount() {
   const [user, setUser] = React.useState(null);
-  const [products, setProducts] = React.useState([]);
-  const [bids, setBids] = React.useState([]);
 
   useEffect(() => {
     const jwt = "Bearer " + localStorage.getItem("auth-token");

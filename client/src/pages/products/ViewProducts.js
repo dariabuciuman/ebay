@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import Card from "@mui/material/Card";
@@ -6,11 +6,31 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./ViewProducts.css";
 
-function ViewProducts() {
+function ViewProducts(props) {
   const [products, setProducts] = React.useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  console.log(location.state);
+
+  async function handleSearch(query) {
+    await axios({
+      method: "get",
+      url: `/api/public/products/search`,
+      params: { query: query },
+    })
+      .then((response) => {
+        setProducts(response.data);
+        //navigate("/products", { state: { query: query } });
+        //window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   async function getProducts() {
     await axios
@@ -28,9 +48,15 @@ function ViewProducts() {
     getProducts();
   }, []);
 
+  useEffect(() => {
+    if (location.state && location.state.query) handleSearch(location.state.query);
+    else getProducts();
+  }, [location]);
+
   return (
     <div className="shop">
       <div className="products">
+        {products && products.length === 0 ? <p style={{ color: "black" }}>No products found.</p> : <></>}
         {products.map((product, index) => (
           <div key={index}>
             <Link

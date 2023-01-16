@@ -24,4 +24,8 @@ public class ProductDTO {
     private Date expiryDate;
 
     private boolean isActive;
+
+    private Long sellerId;
+
+    private Long bidderId;
 }

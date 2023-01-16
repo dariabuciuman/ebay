@@ -3,6 +3,7 @@ package com.ebay.server.service;
 import com.ebay.server.dto.ExpiredProductDTO;
 import com.ebay.server.dto.ProductDTO;
 import com.ebay.server.exception.ProductException;
+import com.ebay.server.exception.UserException;
 import com.ebay.server.model.Product;
 import com.ebay.server.model.User;
 import com.ebay.server.repo.ProductRepository;
@@ -90,5 +91,15 @@ public class ProductService {
     @Transactional
     public void deleteProductById(Long productId) {
         productRepository.removeProductByProductId(productId);
+    }
+
+    public List<ProductDTO> searchProductsByQuery(String queryString) {
+        List<ProductDTO> productDTOS =  new ArrayList<>();
+        List<Product> products = productRepository.searchProductsByQuery(queryString);
+        products.forEach((product) -> {
+            productDTOS.add(ProductUtil.productDAOToDTO(product));
+        });
+        return productDTOS;
+
     }
 }

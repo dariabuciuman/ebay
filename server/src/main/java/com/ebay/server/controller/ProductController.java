@@ -24,6 +24,11 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @GetMapping(value = "/public/products/search")
+    public  List<ProductDTO> searchProducts(@RequestParam String query) {
+        return productService.searchProductsByQuery(query);
+    }
+
     @PostMapping(value ="/private/products/add", consumes = "application/json")
     public void addProduct(@RequestBody ProductDTO productDTO) {
         productService.addProduct(productDTO);

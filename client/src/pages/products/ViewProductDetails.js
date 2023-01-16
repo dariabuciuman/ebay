@@ -16,6 +16,7 @@ function ViewProduct(props) {
   const [formState, setFormState] = React.useState("error");
   const [currentHighestPrice, setCurrentHighestPrice] = React.useState(0);
   const [product, setProduct] = React.useState(null);
+  const [user, setUser] = React.useState(null);
   const client = React.useRef(null);
 
   console.log(state.product);
@@ -26,6 +27,7 @@ function ViewProduct(props) {
   const isLoggedIn = localStorage.getItem("auth-token") !== null;
 
   useEffect(() => {
+    getUserData();
     if (state.product.active === false) {
       setCurrentHighestPrice(state.product.highestPrice);
       setProduct(state.product);
@@ -76,6 +78,12 @@ function ViewProduct(props) {
   }
 
   function bidForProduct() {
+    if (user.userID === product.sellerId) {
+      setFormState("error");
+      setAlertContent("You can not place a bid on your own product");
+      setAlert(true);
+      return;
+    }
     if (bid <= product.startingPrice) {
       setFormState("error");
       setAlert(true);
@@ -117,6 +125,24 @@ function ViewProduct(props) {
       });
     console.log(product);
     console.log(bid);
+  }
+
+  function getUserData() {
+    if (localStorage.getItem("auth-token")) {
+      axios({
+        method: "get",
+        url: `/api/private/user/info`,
+        headers: {
+          Authorization: jwt,
+        },
+      })
+        .then((response) => {
+          setUser(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   return (
@@ -165,7 +191,7 @@ function ViewProduct(props) {
             ) : (
               <></>
             )}
-            {state.product.active && isLoggedIn ? (
+            {state.product.active && isLoggedIn && user && user.userID === product.sellerId ? (
               <div className="product-buttons">
                 <button
                   className="bid-button"

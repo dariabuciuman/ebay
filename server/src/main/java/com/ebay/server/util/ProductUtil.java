@@ -18,6 +18,9 @@ public class ProductUtil {
         productDTO.setPublishDate(product.getPublishDate());
         productDTO.setExpiryDate(product.getExpiryDate());
         productDTO.setActive(product.isActive());
+        productDTO.setSellerId(product.getSeller().getId());
+        if(product.getBidder() != null)
+            productDTO.setBidderId(product.getBidder().getId());
         return productDTO;
     }
 
