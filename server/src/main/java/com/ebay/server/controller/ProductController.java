@@ -14,7 +14,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping(value = "/private/products/getProduct/{productId}")
+    @GetMapping(value = "/public/products/getProduct/{productId}")
     public ProductDTO getProductByID(@PathVariable("productId") Long productId) {
         return productService.getProductDTOByID(productId);
     }

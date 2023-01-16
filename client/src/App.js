@@ -12,6 +12,7 @@ import MyProducts from "./pages/user/MyProducts";
 import MyBids from "./pages/user/MyBids";
 import MyExpiredProducts from "./pages/user/MyExpiredProducts";
 import MyExpiredBids from "./pages/user/MyExpiredBids";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 
 function App() {
   return (
@@ -22,14 +23,16 @@ function App() {
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/" element={<Home />} />
-          <Route path="/products/add" element={<AddProduct />} />
           <Route path="/products" element={<ViewProducts />} />
           <Route path="/products/:id" element={<ViewProduct />} />
-          <Route path="/account" element={<MyAccount />} />
-          <Route path="/account/products" element={<MyProducts />} />
-          <Route path="/account/bids" element={<MyBids />} />
-          <Route path="/account/expired-products" element={<MyExpiredProducts />} />
-          <Route path="/account/expired-bids" element={<MyExpiredBids />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/products/add" element={<AddProduct />} />
+            <Route path="/account" element={<MyAccount />} />
+            <Route path="/account/products" element={<MyProducts />} />
+            <Route path="/account/bids" element={<MyBids />} />
+            <Route path="/account/expired-products" element={<MyExpiredProducts />} />
+            <Route path="/account/expired-bids" element={<MyExpiredBids />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

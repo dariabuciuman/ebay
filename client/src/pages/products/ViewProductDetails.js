@@ -23,6 +23,8 @@ function ViewProduct(props) {
 
   const jwt = "Bearer " + localStorage.getItem("auth-token");
 
+  const isLoggedIn = localStorage.getItem("auth-token") !== null;
+
   useEffect(() => {
     if (state.product.active === false) {
       setCurrentHighestPrice(state.product.highestPrice);
@@ -30,10 +32,9 @@ function ViewProduct(props) {
     } else {
       axios({
         method: "get",
-        url: `/api/private/products/getProduct/${state.product.productId}`,
+        url: `/api/public/products/getProduct/${state.product.productId}`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: jwt,
         },
       })
         .then((response) => {
@@ -105,15 +106,15 @@ function ViewProduct(props) {
         console.log(response);
         setFormState("success");
         setAlertContent("Bid was successful");
+        setAlert(true);
         console.log(bid);
         product.highestPrice = +bid;
       })
       .catch((error) => {
         setFormState("error");
         setAlertContent(error.response.data.message);
+        setAlert(true);
       });
-
-    setAlert(true);
     console.log(product);
     console.log(bid);
   }
@@ -146,7 +147,8 @@ function ViewProduct(props) {
             ) : (
               <p>Product expired in {product.expiryDate.substring(0, 10)}</p>
             )}
-            {state.product.active && (
+
+            {state.product.active && isLoggedIn ? (
               <div className="bidding">
                 <h3>Bid for this product: </h3>
                 <TextField
@@ -160,8 +162,10 @@ function ViewProduct(props) {
                   onChange={addBid}
                 />
               </div>
+            ) : (
+              <></>
             )}
-            {state.product.active && (
+            {state.product.active && isLoggedIn ? (
               <div className="product-buttons">
                 <button
                   className="bid-button"
@@ -174,6 +178,8 @@ function ViewProduct(props) {
                   Place bid
                 </button>
               </div>
+            ) : (
+              <p></p>
             )}
 
             {alert && (
