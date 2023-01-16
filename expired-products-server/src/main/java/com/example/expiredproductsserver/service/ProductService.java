@@ -41,4 +41,23 @@ public class ProductService {
             productRepository.save(ProductUtil.productDTOToDAO(expiredProductDTO));
         log.info("Product {} was added successfully", expiredProductDTO.getName());
     }
+
+    public List<ExpiredProductDTO> getExpiredProductsPostedByUser(Long sellerId){
+        List<Product> productList = productRepository.findAllBySellerId(sellerId);
+        List<ExpiredProductDTO> expiredProductDTOS = new ArrayList<>();
+        productList.forEach((product -> {
+            expiredProductDTOS.add(ProductUtil.expiredProductDAOToDTO(product));
+        }));
+        return expiredProductDTOS;
+    }
+
+    public List<ExpiredProductDTO> getExpiredBidsPostedByUser(Long bidderId){
+        List<Product> productList = productRepository.findAllByBidderId(bidderId);
+        List<ExpiredProductDTO> expiredProductDTOS = new ArrayList<>();
+        productList.forEach((product -> {
+            expiredProductDTOS.add(ProductUtil.expiredProductDAOToDTO(product));
+        }));
+        return expiredProductDTOS;
+    }
+
 }
