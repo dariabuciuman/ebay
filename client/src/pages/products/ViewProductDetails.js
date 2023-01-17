@@ -191,7 +191,7 @@ function ViewProduct(props) {
             ) : (
               <></>
             )}
-            {state.product.active && isLoggedIn && user && user.userID === product.sellerId ? (
+            {state.product.active && isLoggedIn ? (
               <div className="product-buttons">
                 <button
                   className="bid-button"
